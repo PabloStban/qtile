@@ -34,6 +34,14 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
+# Variales
+blanco='ffffff'
+morado='867486'
+
+# Funciones
+#
+
+# Configuracion
 mod = "mod4"
 terminal = guess_terminal()
 
@@ -90,24 +98,25 @@ keys = [
     Key([mod], "e", lazy.spawn("thunar"), desc="Open Thunar"),
 ]
 
-groups = [Group(i) for i in "123456789"]
+groups = [Group(i) for i in ["","","󰝰","󱓞","",""]]
 
-for i in groups:
+for i,group in enumerate(groups):
+    escritorio=str(i+1)
     keys.extend(
         [
             # mod1 + letter of group = switch to group
             Key(
                 [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
+                escritorio,
+                lazy.group[group.name].toscreen(),
+                desc="Switch to group {}".format(group.name),
             ),
             # mod1 + shift + letter of group = switch to & move focused window to group
             Key(
                 [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
+                escritorio,
+                lazy.window.togroup(group.name, switch_group=True),
+                desc="Switch to & move focused window to group {}".format(group.name),
             ),
             # Or, use below if you prefer not to switch to that group.
             # # mod1 + shift + letter of group = move focused window to group
@@ -145,10 +154,16 @@ screens = [
             [
                 #widget.CurrentLayout(),
                 widget.TextBox(
-                    text="󰣇",
+                    text=" 󰣇 ",
                     fontsize=18,
                 ),
-                widget.GroupBox(),
+                widget.GroupBox(
+                    active=blanco,
+                    inactive=morado,
+                    disable_drag=True,
+                    highlight_method='line',
+                    center_aligned=True,
+                ),
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.Chord(
