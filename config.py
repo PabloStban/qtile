@@ -38,7 +38,8 @@ import re
 # Variales
 fuente="HackNerdFont"
 blanco='ffffff'
-morado='867486'
+morado='a15cef'
+plomo='404040'
 arch_size=19
 iconos_sizes=14
 
@@ -171,13 +172,14 @@ screens = [
                 separador(),
                 widget.GroupBox(
                     active=blanco,
-                    inactive=morado,
+                    inactive=plomo,
                     disable_drag=True,
-                    highlight_method='line',
+                    highlight_method='text',
                     center_aligned=True,
                     fontsize=iconos_sizes,
                     hide_unused=False,
                     padding=4,
+                    this_current_screen_border=morado,
                 ),
                 separador(),
                 widget.Prompt(),
@@ -195,15 +197,17 @@ screens = [
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 separador(),
-                widget.CPU(),
+                widget.CPU(
+                    padding=5,
+                ),
                 widget.CPUGraph(),
                 separador(),
                 widget.Systray(
                     icon_size=iconos_sizes,
-                    padding=7,
+                    padding=5,
                 ),
                 separador(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
+                widget.Clock(format="%a %d-%m-%Y %H:%M"),
                 separador(),
                 widget.QuickExit(),
             ],
