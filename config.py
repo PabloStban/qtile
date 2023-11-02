@@ -110,6 +110,8 @@ keys = [
 
 ]
 
+
+
 groups = [Group(i) for i in ["","","󰝰","󱓞","",""]]
 
 for i,group in enumerate(groups):
@@ -137,8 +139,11 @@ for i,group in enumerate(groups):
         ]
     )
 
+    #"#d75f5f", "#8f3d3d"
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
+    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], 
+    border_width=2, 
+    border_focus=morado,),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -160,6 +165,7 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
+
 screens = [
     Screen(
         top=bar.Bar(
@@ -168,24 +174,30 @@ screens = [
                 widget.TextBox(
                     text=" 󰣇 ",
                     fontsize=arch_size,
+                    foreground='#1793D1',
                 ),
                 separador(),
                 widget.GroupBox(
                     active=blanco,
                     inactive=plomo,
                     disable_drag=True,
+                    #background='#ff0000',
+                    #foreground='#fff000',
+                    #rounded=True,
                     highlight_method='text',
                     center_aligned=True,
                     fontsize=iconos_sizes,
                     hide_unused=False,
-                    padding=4,
+                    padding=10,
                     this_current_screen_border=morado,
                 ),
-                separador(),
-                widget.Prompt(),
+               
+                #widget.Prompt(),
                 widget.WindowName(
-                    #format='{state} | {name}',
+                    format='{state}{name}',
+                    foreground=blanco,
                 ),
+
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
@@ -196,25 +208,53 @@ screens = [
                 #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                separador(),
-                widget.CPU(
-                    padding=5,
+               
+                widget.WidgetBox([
+                    separador(),
+                    widget.Net(
+                        format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}'
+                    ),
+                    separador(),
+                    widget.DF(
+                        measure='G',
+                        partition='/',
+                        warn_space=10,
+                        visible_on_warn=False,
+                    ),
+                    separador(),
+                    widget.CPU(
+                        padding=5,
+                        foreground=blanco,
+                    ),
+                ],
+                text_open='[>] Information',
+                text_closed='[<] Information'
+
                 ),
-                widget.CPUGraph(),
+                               
                 separador(),
                 widget.Systray(
                     icon_size=iconos_sizes,
                     padding=5,
                 ),
+                widget.Volume(
+                    emoji=True,
+                    emoji_list=['🔇', '🔈', '🔉', '🔊'],
+                ),
                 separador(),
-                widget.Clock(format="%a %d-%m-%Y %H:%M"),
+                widget.Clock(
+                    format="%a %d-%m-%Y %H:%M",
+                    foreground=blanco,
+                ),
                 separador(),
-                widget.QuickExit(),
+                widget.QuickExit(
+                    foreground=blanco,
+                ),
             ],
             30,
             opacity=0.8,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+            border_width=[0, 2, 0, 2],  # Draw top and bottom borders
+            border_color=["ffffff", "ffffff", "ffffff", "ffffff"]  # Borders are magenta
         ),
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
@@ -232,7 +272,7 @@ mouse = [
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
-follow_mouse_focus = True
+follow_mouse_focus = False
 bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
