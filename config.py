@@ -105,6 +105,8 @@ keys = [
     Key([mod], "m", lazy.spawn("rofi -show drun"), desc="Open Rofi"),
     Key([mod, "shift"], "f", lazy.spawn("firefox"), desc="Open Firefox"),
     Key([mod], "e", lazy.spawn("thunar"), desc="Open Thunar"),
+    Key([mod], "b", lazy.hide_show_bar("top")),
+
 ]
 
 groups = [Group(i) for i in ["","","󰝰","󱓞","",""]]
@@ -202,6 +204,7 @@ screens = [
                 widget.QuickExit(),
             ],
             30,
+            opacity=0.8,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
