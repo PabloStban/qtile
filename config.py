@@ -191,10 +191,10 @@ screens = [
                     padding=10,
                     this_current_screen_border=morado,
                 ),
-               
+                separador(), 
                 #widget.Prompt(),
                 widget.WindowName(
-                    format='{state}{name}',
+                    format='{}',
                     foreground=blanco,
                 ),
 
@@ -208,7 +208,7 @@ screens = [
                 #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-               
+                separador(), 
                 widget.WidgetBox([
                     separador(),
                     widget.Net(
@@ -240,7 +240,9 @@ screens = [
                 widget.Volume(
                     emoji=True,
                     emoji_list=['🔇', '🔈', '🔉', '🔊'],
+                    fontsize=iconos_sizes,
                 ),
+
                 separador(),
                 widget.Clock(
                     format="%a %d-%m-%Y %H:%M",
@@ -252,9 +254,9 @@ screens = [
                 ),
             ],
             30,
-            opacity=0.8,
-            border_width=[0, 2, 0, 2],  # Draw top and bottom borders
-            border_color=["ffffff", "ffffff", "ffffff", "ffffff"]  # Borders are magenta
+            opacity=0.7,
+            border_width=[0, 0, 1, 0],  # Draw top and bottom borders
+            border_color=["ffffff", "ffffff", "404040", "ffffff"]  # Borders are magenta
         ),
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling

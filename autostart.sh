@@ -14,6 +14,6 @@ xrandr --output Virtual-1 --mode 1600x900_60.00
 # iconos del sistema
 udiskie -t &
 nm-applet &
-volumeicon &
+#volumeicon &
 nitrogen --restore &
 picom &
