@@ -194,6 +194,10 @@ screens = [
                 #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
+                separador(),
+                widget.CPU(),
+                widget.CPUGraph(),
+                separador(),
                 widget.Systray(
                     icon_size=iconos_sizes,
                     padding=7,
