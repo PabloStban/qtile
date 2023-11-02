@@ -33,7 +33,8 @@ from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
-
+from libqtile.widget import WindowName
+import re
 # Variales
 fuente="HackNerdFont"
 blanco='ffffff'
@@ -178,7 +179,9 @@ screens = [
                 ),
                 separador(),
                 widget.Prompt(),
-                widget.WindowName(),
+                widget.WindowName(
+                    #format='{state} | {name}',
+                ),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
@@ -189,7 +192,10 @@ screens = [
                 #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                widget.Systray(),
+                widget.Systray(
+                    icon_size=iconos_sizes,
+                    padding=7,
+                ),
                 separador(),
                 widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
                 separador(),
