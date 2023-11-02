@@ -35,11 +35,19 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
 # Variales
+fuente="HackNerdFont"
 blanco='ffffff'
 morado='867486'
+arch_size=19
+iconos_sizes=14
 
 # Funciones
-#
+def separador():
+    return widget.Sep(
+        linewidth=1,
+        padding=10,
+        size_percent=70,
+    )
 
 # Configuracion
 mod = "mod4"
@@ -142,7 +150,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="Liberation Mono",
+    font=fuente,
     fontsize=13,
     padding=3,
 )
@@ -155,15 +163,20 @@ screens = [
                 #widget.CurrentLayout(),
                 widget.TextBox(
                     text=" 󰣇 ",
-                    fontsize=18,
+                    fontsize=arch_size,
                 ),
+                separador(),
                 widget.GroupBox(
                     active=blanco,
                     inactive=morado,
                     disable_drag=True,
                     highlight_method='line',
                     center_aligned=True,
+                    fontsize=iconos_sizes,
+                    hide_unused=False,
+                    padding=4,
                 ),
+                separador(),
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.Chord(
@@ -177,7 +190,9 @@ screens = [
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 widget.Systray(),
+                separador(),
                 widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
+                separador(),
                 widget.QuickExit(),
             ],
             30,
