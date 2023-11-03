@@ -40,8 +40,8 @@ fuente="HackNerdFont"
 blanco='ffffff'
 morado='a15cef'
 plomo='404040'
-arch_size=19
-iconos_sizes=14
+arch_size=24
+iconos_sizes=17
 
 # Funciones
 def separador():
@@ -143,6 +143,7 @@ for i,group in enumerate(groups):
 layouts = [
     layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], 
     border_width=2, 
+    margin=5,
     border_focus=morado,),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
@@ -164,6 +165,7 @@ widget_defaults = dict(
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
+
 
 
 screens = [
@@ -254,9 +256,11 @@ screens = [
                 ),
             ],
             30,
-            opacity=0.7,
+            background='#010000',
+            opacity=0.85,
             border_width=[0, 0, 1, 0],  # Draw top and bottom borders
-            border_color=["ffffff", "ffffff", "404040", "ffffff"]  # Borders are magenta
+            border_color=["ffffff", "ffffff", "404040", "ffffff"],  # Borders are magenta
+            margin=[5, 10, 0, 10],
         ),
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
