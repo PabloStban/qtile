@@ -224,6 +224,17 @@ screens = [
                         visible_on_warn=False,
                     ),
                     separador(),
+                    widget.DF(
+                        measure='G',
+                        partition='/home',
+                        warn_space=5,
+                        visible_on_warn=False,
+                    ),
+                    separador(),
+                    widget.Memory(
+                        measure_mem='G',
+                    ),
+                    separador(),
                     widget.CPU(
                         padding=5,
                         foreground=blanco,
