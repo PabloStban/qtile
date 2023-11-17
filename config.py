@@ -105,6 +105,7 @@ keys = [
     # Comandos propios
     Key([mod], "m", lazy.spawn("rofi -show drun"), desc="Open Rofi"),
     Key([mod, "shift"], "f", lazy.spawn("firefox"), desc="Open Firefox"),
+    Key([mod, "shift"], "p", lazy.spawn("i3lock -u -i /home/smert/Pictures/i3.png"), desc="Open i3lock"),
     Key([mod], "e", lazy.spawn("thunar"), desc="Open Thunar"),
     Key([mod], "b", lazy.hide_show_bar("top")),
 

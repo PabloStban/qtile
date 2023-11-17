@@ -16,5 +16,5 @@ udiskie -t &
 nm-applet &
 #volumeicon &
 #nitrogen --restore &
-feh --bg-fill $HOME/Pictures/robot2.jpg
+feh --bg-fill $HOME/Pictures/cyberpunk.jpg
 picom &
