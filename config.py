@@ -87,7 +87,7 @@ keys = [
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
     ),
-    Key([mod], "Return", lazy.spawn("alacritty"), desc="Launch terminal"),
+    Key([mod], "Return", lazy.spawn("kitty"), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
@@ -107,6 +107,14 @@ keys = [
     Key([mod, "shift"], "f", lazy.spawn("firefox"), desc="Open Firefox"),
     Key([mod], "e", lazy.spawn("thunar"), desc="Open Thunar"),
     Key([mod], "b", lazy.hide_show_bar("top")),
+
+    # Mover apps entre ventanas
+    Key([mod, "shift"], "1", lazy.window.togroup("1")), 
+    Key([mod, "shift"], "2", lazy.window.togroup("2")), 
+    Key([mod, "shift"], "3", lazy.window.togroup("3")), 
+    Key([mod, "shift"], "4", lazy.window.togroup("4")), 
+    Key([mod, "shift"], "5", lazy.window.togroup("5")), 
+    Key([mod, "shift"], "6", lazy.window.togroup("6")), 
 
 ]
 
@@ -227,7 +235,7 @@ screens = [
                     widget.DF(
                         measure='G',
                         partition='/home',
-                        warn_space=5,
+                        warn_space=10,
                         visible_on_warn=False,
                     ),
                     separador(),
