@@ -35,6 +35,8 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.widget import WindowName
 import re
+from libqtile.config import Rule
+
 # Variales
 fuente="HackNerdFont"
 blanco='ffffff'
@@ -50,6 +52,7 @@ def separador():
         padding=10,
         size_percent=70,
     )
+
 
 # Configuracion
 mod = "mod4"
@@ -152,9 +155,11 @@ for i,group in enumerate(groups):
 layouts = [
     layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], 
     border_width=2, 
-    margin=5,
+    margin=8,
     border_focus=morado,),
-    layout.Max(),
+    layout.Max(
+        margin=8,
+    ),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -201,6 +206,7 @@ screens = [
                     hide_unused=False,
                     padding=10,
                     this_current_screen_border=morado,
+                    #urgent_border=urgent_border
                 ),
                 separador(), 
                 #widget.Prompt(),
@@ -249,9 +255,8 @@ screens = [
                         foreground=blanco,
                     ),
                 ],
-                text_open='[>] Information',
-                text_closed='[<] Information'
-
+                text_open='[>] System',
+                text_closed='[<] System'
                 ),
                                
                 separador(),
@@ -273,12 +278,13 @@ screens = [
                 separador(),
                 widget.QuickExit(
                     foreground=blanco,
+                    padding=5,
                 ),
             ],
             30,
             background='#010000',
             opacity=0.85,
-            border_width=[0, 0, 1, 0],  # Draw top and bottom borders
+            border_width=[0, 0, 0, 0],  # Draw top and bottom borders
             border_color=["ffffff", "ffffff", "404040", "ffffff"],  # Borders are magenta
             margin=[5, 10, 0, 10],
         ),
