@@ -177,25 +177,43 @@ for i,group in enumerate(groups):
     )
 
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], 
-    border_width=2, 
-    margin=8,
-    border_focus=morado,),
+    layout.Columns(
+        border_focus_stack=["#d75f5f", "#8f3d3d"], 
+        border_width=2, 
+        margin=8,
+        border_focus=morado,),
     layout.Max(
         margin=8,
     ),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
-    layout.Bsp(),
+    # layout.Bsp(),
     # layout.Matrix(),
     # layout.MonadTall(),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
+    #layout.MonadThreeCol(),
+    layout.Spiral(
+        border_focus_stack=["#d75f5f", "#8f3d3d"], 
+        border_width=2, 
+        margin=8,
+        border_focus=morado,
+    ),
+    layout.MonadWide(
+        border_focus_stack=["#d75f5f", "#8f3d3d"], 
+        border_width=2, 
+        margin=8,
+        border_focus=morado,
+    ),
+    layout.RatioTile(
+        border_focus_stack=["#d75f5f", "#8f3d3d"], 
+        border_width=2, 
+        margin=8,
+        border_focus=morado,
+    ),
     # layout.Tile(),
     # layout.TreeTab(),
     # layout.VerticalTile(),
     # layout.Zoomy(),
-    layout.Floating(),
+    #layout.Floating(),
 ]
 
 widget_defaults = dict(
