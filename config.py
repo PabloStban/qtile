@@ -35,7 +35,6 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.widget import WindowName
 import re
-from libqtile.config import Rule
 
 # Variales
 fuente="HackNerdFont"
@@ -53,7 +52,6 @@ def separador():
         size_percent=70,
     )
 
-
 # Configuracion
 mod = "mod4"
 terminal = guess_terminal()
@@ -66,7 +64,7 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+    Key([mod], "c", lazy.layout.next(), desc="Move window focus to other window"),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
@@ -91,19 +89,15 @@ keys = [
         desc="Toggle between split and unsplit sides of stack",
     ),
     Key([mod], "Return", lazy.spawn("kitty"), desc="Launch terminal"),
-    # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key([mod], "Tab", lazy.next_layout(), desc="Next layout"),
+    Key([mod, "shift"], "Tab", lazy.prev_layout(), desc="Previous layout"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
-    Key(
-        [mod],
-        "f",
-        lazy.window.toggle_fullscreen(),
-        desc="Toggle fullscreen on the focused window",
-    ),
+    Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen on the focused window",),
+
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    #Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
 
     # Comandos propios
     Key([mod], "m", lazy.spawn("rofi -show drun"), desc="Open Rofi"),
@@ -111,6 +105,25 @@ keys = [
     Key([mod, "shift"], "p", lazy.spawn("i3lock -u -i /home/smert/Pictures/i3.png"), desc="Open i3lock"),
     Key([mod], "e", lazy.spawn("thunar"), desc="Open Thunar"),
     Key([mod], "b", lazy.hide_show_bar("top")),
+    Key([mod], "space", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
+    Key([mod], "s", lazy.spawn("flameshot gui"), desc="Run flameshot"),
+    
+    Key(
+        [mod, "shift"], "t", 
+        lazy.window.toggle_floating(),
+        lazy.window.set_size_floating(600, 400),
+        lazy.window.center(),
+        desc="Open floating terminal",
+    ),
+
+    Key(
+        [mod, "control"], "t", 
+        lazy.window.toggle_floating(),
+        lazy.window.set_size_floating(600, 400),
+        lazy.window.set_position(989, 41),
+        desc="Open floating terminal",
+    ),
+    
 
     # Mover apps entre ventanas
     Key([mod, "shift"], "1", lazy.window.togroup("1")), 
@@ -120,9 +133,21 @@ keys = [
     Key([mod, "shift"], "5", lazy.window.togroup("5")), 
     Key([mod, "shift"], "6", lazy.window.togroup("6")), 
 
+    # Ventanas flotantes
+
+    Key([mod, "shift"], "n", lazy.window.center(), desc="Mover ventana flotante izquierda"),
+    
+    Key([mod, "shift"], "Left", lazy.window.move_floating(-20, 0), desc="Mover ventana flotante izquierda"),
+    Key([mod, "shift"], "Right", lazy.window.move_floating(20, 0), desc="Mover ventana flotante derecha"),
+    Key([mod, "shift"], "Up", lazy.window.move_floating(0, -20), desc="Mover ventana flotante arriba"),
+    Key([mod, "shift"], "Down", lazy.window.move_floating(0, 20), desc="Mover ventana flotante abajo"),
+
+    Key([mod, "control"], "Left", lazy.window.resize_floating(-20, 0), desc="Resize ventana flotante izquierda"),
+    Key([mod, "control"], "Right", lazy.window.resize_floating(20, 0), desc="Resize ventana flotante izquierda"),
+    Key([mod, "control"], "Up", lazy.window.resize_floating(0, -20), desc="Resize ventana flotante izquierda"),
+    Key([mod, "control"], "Down", lazy.window.resize_floating(0, 20), desc="Resize ventana flotante izquierda"),
+
 ]
-
-
 
 groups = [Group(i) for i in ["","","󰝰","󱓞","",""]]
 
@@ -151,7 +176,6 @@ for i,group in enumerate(groups):
         ]
     )
 
-    #"#d75f5f", "#8f3d3d"
 layouts = [
     layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], 
     border_width=2, 
@@ -162,7 +186,7 @@ layouts = [
     ),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
+    layout.Bsp(),
     # layout.Matrix(),
     # layout.MonadTall(),
     # layout.MonadWide(),
@@ -171,6 +195,7 @@ layouts = [
     # layout.TreeTab(),
     # layout.VerticalTile(),
     # layout.Zoomy(),
+    layout.Floating(),
 ]
 
 widget_defaults = dict(
@@ -180,19 +205,17 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-
-
 screens = [
     Screen(
         top=bar.Bar(
             [
-                #widget.CurrentLayout(),
                 widget.TextBox(
                     text=" 󰣇 ",
                     fontsize=arch_size,
                     foreground='#1793D1',
                 ),
                 separador(),
+
                 widget.GroupBox(
                     active=blanco,
                     inactive=plomo,
@@ -206,30 +229,17 @@ screens = [
                     hide_unused=False,
                     padding=10,
                     this_current_screen_border=morado,
-                    #urgent_border=urgent_border
-                ),
-                separador(), 
-                #widget.Prompt(),
-                widget.WindowName(
-                    format='{}',
-                    foreground=blanco,
+                    urgent_border='#010000'
                 ),
 
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
-                #widget.TextBox("default config", name="default"),
-                #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
+                separador(),
+                widget.Spacer(),
                 separador(), 
+                
                 widget.WidgetBox([
                     separador(),
                     widget.Net(
-                        format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}'
+                        format='{down:.0f}{down_suffix} ↓↑ {up:.0f}{up_suffix}',
                     ),
                     separador(),
                     widget.DF(
@@ -260,20 +270,31 @@ screens = [
                 ),
                                
                 separador(),
+                widget.CurrentLayout(),
+
+                separador(), 
+                widget.TextBox(
+                    text="󱂬 ",
+                    fontsize=19,
+                ),
+                widget.WindowCount(
+                   show_zero=True, 
+                ),
+                separador(),
+
                 widget.Systray(
                     icon_size=iconos_sizes,
                     padding=5,
-                ),
-                widget.Volume(
-                    emoji=True,
-                    emoji_list=['🔇', '🔈', '🔉', '🔊'],
-                    fontsize=iconos_sizes,
                 ),
 
                 separador(),
                 widget.Clock(
                     format="%a %d-%m-%Y %H:%M",
                     foreground=blanco,
+                ),
+                separador(),
+                widget.KeyboardLayout(
+                    configured_keyboards=['us','es'],
                 ),
                 separador(),
                 widget.QuickExit(
@@ -299,7 +320,7 @@ screens = [
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
     Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front()),
+    #Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
 dgroups_key_binder = None
